@@ -6,9 +6,9 @@
         <main>
             <router-view></router-view>
         </main>
-        <!-- <footer>            
+        <footer>
             <button @click="logout">Logout</button>
-        </footer> -->
+        </footer>
     </v-app>
 </template>
 
@@ -43,5 +43,9 @@
         div {
             width: 100%;
         }
+    }
+
+    footer {
+        padding: 0 $size14px
     }
 </style>

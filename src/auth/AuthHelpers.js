@@ -28,22 +28,20 @@ export default class AuthHelpers {
     }
     
     startAsync() {
-        return new Promise((resolve, reject) => {
-
+        return new Promise((resolve, reject) => {            
             firebaseAuth().onAuthStateChanged(user => {
-
-                if (user) {
-                    console.log("user authenticated", user)
-                    resolve(this.setAuth(user))
+                if (user) {                
+                    firebaseAuth().currentUser.getIdToken().then(token => {
+                        user.token = token
+                        //console.log("user authenticated", user)
+                        resolve(this.setAuth(user))
+                    })                    
                 } else {
-                    console.log("user not authenticated", user) 
+                    //console.log("user not authenticated", user) 
                     resolve(this.setAuth(null)) 
                 }
-
             });
-
         })
-
     }
 
     getRedirectResult() {    
