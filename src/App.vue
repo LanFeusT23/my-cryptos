@@ -6,12 +6,21 @@
         <main>
             <router-view></router-view>
         </main>
+        <!-- <footer>            
+            <button @click="logout">Logout</button>
+        </footer> -->
     </v-app>
 </template>
 
 <script>
     export default {
-        name: 'app'
+        name: 'app',
+        dependencies: ['authHelpers'],
+        methods: {
+            logout() {
+                this.authHelpers.logout()
+            }
+        }
     }
 </script>
 
@@ -23,7 +32,6 @@
         height: 5.25rem;
         background: #242426;
         border-bottom: 2px solid #4dadf9;
-        margin-bottom: 1.5rem;
 
         h1 {
             font-style: italic;
