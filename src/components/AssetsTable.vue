@@ -1,6 +1,6 @@
 <template>
     <div id="assets-table-wrapper">
-        <div class='asset-card' v-for='asset in assets' :key='asset.id'>
+        <div class='asset-card' v-for='asset in sortedAssets' :key='asset.id'>
             <div class="icon" :class='getCssClass(asset)'></div>
             <div class="coin-name-wrapper">
                     <span class="coin-name">{{ asset.id }}</span>
@@ -19,7 +19,12 @@
     export default {
         name: 'AssetsTable',
         computed: {
-            ...mapGetters("assets", ["assets"])
+            ...mapGetters("assets", ["assets"]),
+            sortedAssets() {
+                return this.assets.sort((a, b) => {
+                    return a.totalValue < b.totalValue
+                })
+            }
         },
         methods: {
             getCssClass(asset) {
@@ -34,6 +39,7 @@
         background: $backgroundSecondary;
         padding: $size10px;
         border-radius: 5px;
+        margin-bottom: $size14px;
         display: grid;
 
         .icon {

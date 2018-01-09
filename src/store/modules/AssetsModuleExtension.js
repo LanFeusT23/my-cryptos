@@ -16,6 +16,10 @@ export default class AssetsModuleExtension {
             getters: {
                 assets(state, getters, rootState) {
                     let prices = rootState.prices.pricesInUSD
+                    if (Object.keys(prices).length === 0 && prices.constructor === Object && state.localAssets.length === 0) {
+                        return []
+                    }
+
                     return state.localAssets.map(asset => {
                         return {
                             ...asset,
@@ -33,9 +37,10 @@ export default class AssetsModuleExtension {
                 loadDataAsync({ commit }, name) {
 
                     return self.firebaseRepository.getAssetsAsync().then(assetsData => {
-                        var assetsArray = []
-                        Object.keys(assetsData).map(assetKey => {
-                            assetsArray = [...Array(assetsData[assetKey])]
+                        var assetsArray = Object.keys(assetsData).map(assetKey => {
+                            return {
+                                ...assetsData[assetKey]
+                            }
                         })
 
                         commit("setAssetsData", assetsArray);
