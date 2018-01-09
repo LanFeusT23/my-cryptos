@@ -10,7 +10,9 @@ export default class StoreConfigProvider {
 
         var storeConfig = {
             strict: this.strictMode,
-            state: {},
+            state: {
+                user: undefined
+            },
             getters: {
                 dataLoaded(state) {
                     let prices = state.prices.pricesInUSD
@@ -19,9 +21,26 @@ export default class StoreConfigProvider {
                     }
 
                     return true
+                },
+                user(state) {
+                    return state.user
                 }
             },
-            mutations: {},
+            mutations: {
+                setUser: (state, user) => state.user = user,
+                clearUser: (state) => state.user = undefined
+            },
+            actions: {
+                setUser({ commit }, user) {
+                    commit('setUser', {
+                        uid: user.uid,
+                        refreshToken: user.refreshToken
+                    })
+                },
+                clearUser({ commit }) {
+                    commit('clearUser')
+                }
+            },
             modules: {
                 assets: this.assetsModule,
                 prices: this.pricesModule

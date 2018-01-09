@@ -11,6 +11,9 @@ import CryptoPricesModuleExtension from "@/store/modules/CryptoPricesModuleExten
 import StoreConfigProvider from "@/store/StoreConfigProvider";
 import FirebaseRepository from "@/repositories/FirebaseRepository";
 import CryptoPricesRepository from "@/repositories/CryptoPricesRepository";
+import AuthRouterGuard from './router/AuthRouterGuard'
+
+import AuthHelpers from '@/auth/AuthHelpers'
 
 const appBinding = function (Vue) {
     Vue.use(injector);
@@ -21,6 +24,7 @@ const appBinding = function (Vue) {
     injector.constant("inDev", process.env.NODE_ENV !== "production");
     injector.constant("window", window);
 
+    injector.service("authHelpers", AuthHelpers);
     injector.service("routesProvider", RoutesProvider);
 
     injector.factory("router", ["routesProvider"], (routesProvider) => {
@@ -44,6 +48,9 @@ const appBinding = function (Vue) {
     });
 
     sync(injector.get("store"), injector.get("router"));
+    
+    var routerGuard = new AuthRouterGuard(injector.get('authHelpers'))
+    routerGuard.guard(injector.get('router'), injector.get('store'))
 
     return injector;
 };

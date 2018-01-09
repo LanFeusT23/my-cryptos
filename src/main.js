@@ -12,10 +12,12 @@ Vue.config.productionTip = false
 /* eslint-disable no-new */
 var injector = appBinding(Vue);
 
-new Vue({
-    el: '#app',
-    template: '<App/>',
-    components: { App },
-    router: injector.get("router"),
-    store: injector.get("store")
+injector.get('authHelpers').startAsync().then(user => {
+    new Vue({
+        el: '#app',
+        template: '<App/>',
+        components: { App },
+        router: injector.get("router"),
+        store: injector.get("store")
+    })
 })

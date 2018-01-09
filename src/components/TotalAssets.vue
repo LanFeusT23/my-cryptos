@@ -3,15 +3,18 @@
         <div>Total Assets: $XXXX</div>
         <div>Total Costs: $XXXX</div>
         <div>Total Profit: $XXXX</div>
+        <button @click="logout">Logout</button>
     </div>
 </template>
 
 <script>
+
 export default {
     name: 'TotalAssets',
-    data () {
-        return {
-
+    dependencies: ['authHelpers'],
+    methods: {
+        logout() {
+            this.authHelpers.logout()
         }
     }
 }
