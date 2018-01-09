@@ -1,4 +1,4 @@
-import { firebaseAuth, googleProvider } from './constants';
+import { firebaseAuth, googleProvider } from '@/auth/constants';
 
 export default class AuthHelpers {
     constructor (store) {

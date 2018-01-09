@@ -3,7 +3,7 @@ export default class AuthRouterGuard {
         this.authHelpers = authHelpers
     }
 
-    guard(router, store) {
+    guard(router) {
 
         router.beforeEach((to, from, next) => {
             let userIsLoggedIn = this.authHelpers.getAuth();
