@@ -11,7 +11,16 @@ export default class StoreConfigProvider {
         var storeConfig = {
             strict: this.strictMode,
             state: {},
-            getters: {},
+            getters: {
+                dataLoaded(state) {
+                    let prices = state.prices.pricesInUSD
+                    if ((Object.keys(prices).length === 0 && prices.constructor === Object) || state.assets.localAssets.length === 0) {
+                        return false
+                    }
+
+                    return true
+                }
+            },
             mutations: {},
             modules: {
                 assets: this.assetsModule,

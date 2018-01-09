@@ -10,13 +10,12 @@ export default class AssetsModuleExtension {
         return {
             namespaced: true,
             state: {
-                localAssets: [],
-                lastLoaded: new Date()
+                localAssets: []
             },
             getters: {
-                assets(state, getters, rootState) {
+                assets(state, getters, rootState, rootGetters) {
                     let prices = rootState.prices.pricesInUSD
-                    if (Object.keys(prices).length === 0 && prices.constructor === Object && state.localAssets.length === 0) {
+                    if (!rootGetters.dataLoaded) {
                         return []
                     }
 

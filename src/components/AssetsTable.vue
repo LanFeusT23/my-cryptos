@@ -1,5 +1,5 @@
 <template>
-    <div id="assets-table-wrapper">
+    <div id="assets-table-wrapper" v-if='dataLoaded'>
         <div class='asset-card' v-for='asset in sortedAssets' :key='asset.id'>
             <div class="icon" :class='getCssClass(asset)'></div>
             <div class="coin-name-wrapper">
@@ -20,6 +20,7 @@
         name: 'AssetsTable',
         computed: {
             ...mapGetters("assets", ["assets"]),
+            ...mapGetters(["dataLoaded"]),
             sortedAssets() {
                 return this.assets.sort((a, b) => {
                     return a.totalValue < b.totalValue
