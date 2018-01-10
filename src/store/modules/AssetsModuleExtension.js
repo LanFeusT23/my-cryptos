@@ -20,10 +20,16 @@ export default class AssetsModuleExtension {
                     }
 
                     return state.localAssets.map(asset => {
+                        var assetPrice = prices[asset.id];
+                        var totalValue = assetPrice * asset.coinCount;
+                        var profit = totalValue - asset.investment;
+
                         return {
                             ...asset,
-                            coinValue: prices[asset.id],
-                            totalValue: Math.trunc(prices[asset.id] * asset.coinCount)
+                            coinValue: assetPrice,
+                            totalValue: Math.trunc(totalValue),
+                            profit: profit.toFixed(0),
+                            isProfit: profit >= 0
                         }
                     })
                 }
