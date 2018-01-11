@@ -2,7 +2,7 @@
     <div id="assets-table-wrapper" v-if='dataLoaded'>
         <div class='asset-card' v-for='asset in sortedAssets' :key='asset.id'>
             <div class="coin-info">
-                <div class="icon" :class='getCssClass(asset)'></div>
+                <a class="icon" :class='getCssClass(asset)' :href='asset.chartsUrl' target='_blank'></a>
                 <div class="coin-name-wrapper">
                         <span class="coin-name">{{ asset.id }}</span>
                         <span class="coin-value">(${{ asset.coinValue }})</span>
