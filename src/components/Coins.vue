@@ -41,7 +41,10 @@
         padding: $size14px;
         display: flex;
         flex-flow: column;
-        justify-content: center;            
+        justify-content: center;
+        max-width: 800px;
+        max-width: 420px;
+        width: 100%;
 
         .loader {
             svg circle {

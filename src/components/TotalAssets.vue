@@ -49,6 +49,7 @@
             display: flex;
             justify-content: space-between;
             align-items: baseline;
+            line-height: 2.5rem;
         }
 
         .total-assets-title {

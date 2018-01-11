@@ -1,13 +1,30 @@
 <template>
     <div id="assets-table-wrapper" v-if='dataLoaded'>
         <div class='asset-card' v-for='asset in sortedAssets' :key='asset.id'>
-            <div class="icon" :class='getCssClass(asset)'></div>
-            <div class="coin-name-wrapper">
-                    <span class="coin-name">{{ asset.id }}</span>
-                    <span class="coin-value">(${{ asset.coinValue }})</span>
+            <div class="coin-info">
+                <div class="icon" :class='getCssClass(asset)'></div>
+                <div class="coin-name-wrapper">
+                        <span class="coin-name">{{ asset.id }}</span>
+                        <span class="coin-value">(${{ asset.coinValue }})</span>
+                    </div>
+                <div class="count">{{ asset.coinCount }}</div>
+                <div class="total-value">
+                    <div class='total-value-title'>Total</div>
+                    <div>${{ asset.totalValue }}</div>                    
                 </div>
-            <div class="count">{{ asset.coinCount }}</div>
-            <div class="total-value">${{ asset.totalValue }}</div>
+            </div>
+            <div class='meta-info'>
+                <div class="roi">
+                    {{ asset.roi }}%
+                </div>
+                <div class="invested">
+                    <i class="fa fa-credit-card"></i>
+                    ${{ asset.investment }}
+                </div>
+                <div class="profit" :class='{ isProfit: asset.isProfit }'>
+                    ${{ asset.profit }}
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -38,73 +55,119 @@
 <style lang='scss' scoped>
     .asset-card {
         background: $backgroundSecondary;
-        padding: $size10px;
         border-radius: 5px;
-        margin-bottom: $size14px;
-        display: grid;
+        margin-bottom: $size16px;
+        padding: 0;
 
-        .icon {
-            grid-area: icon;
-        }
+        .coin-info {
+            padding: $size10px;
+            display: grid;
 
-        .coin-name-wrapper {
-            grid-area: coin-name;
-        }
-
-        .count {
-            grid-area: count;
-        }
-
-        .total-value {
-            grid-area: total-value;
-        }
-
-        grid-column-gap: $size10px;
-        grid-row-gap: calc(#{$size16px} / 2);
-        grid-template-columns: 58px 1fr;
-        grid-template-rows: 46px 1fr;
-        grid-template-areas: 
-            "icon   coin-name"
-            "count  total-value";    
-            
-        .icon {
-            background-size: 46px;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .coin-name-wrapper {
-            font-weight: 200;
-            display: flex;
-            align-items: center;
-
-            > span:first-child {
-                margin-right: $size10px;
+            .icon {
+                grid-area: icon;
             }
 
-            .coin-name {
-                font-size: $size40px;
+            .coin-name-wrapper {
+                grid-area: coin-name;
             }
 
-            .coin-value {
-                font-size: $size24px;
+            .count {
+                grid-area: count;
             }
-        }
 
-        .count {
-            overflow: hidden;
-            text-align: center;
-            font-weight: 200;
-            font-size: $size12px;
-        }
+            .total-value {
+                grid-area: total-value;
+            }
 
-        .total-value {
-            font-weight: 400;
-            line-height: 3rem;
-            font-size: $size60px;
-            color: $colorSuccess;
-            text-align: right;
+            .meta-info {
+                grid-area: meta-info;
+            }
+
+            grid-column-gap: $size10px;
+            grid-row-gap: calc(#{$size16px} / 2);
+            grid-template-columns: 58px 1fr;
+            grid-template-rows: 46px 1fr;
+            grid-template-areas: 
+                "icon       coin-name"
+                "count      total-value"   
+                "meta-info  meta-info";
+                
+            .icon {
+                background-size: 46px;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+
+            .coin-name-wrapper {
+                font-weight: 200;
+                display: flex;
+                align-items: center;
+
+                > span:first-child {
+                    margin-right: $size10px;
+                }
+
+                .coin-name {
+                    font-size: $size40px;
+                }
+
+                .coin-value {
+                    font-size: $size24px;
+                }
+            }
+
+            .count {
+                overflow: hidden;
+                text-align: center;
+                font-weight: 200;
+                font-size: $size12px;
+            }
+
+            .total-value {
+                font-weight: 400;
+                line-height: 3rem;
+                font-size: $size60px;
+                text-align: right;
+
+                .total-value-title {
+                    text-transform: uppercase;
+                    font-size: $size14px;
+                    line-height: 1rem;
+                }
+            }
         }
         
+        .meta-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-top: 1px dashed $borderPrimary;
+
+            > div {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                
+                &.invested {
+                    .fa {
+                        margin-right: 5px;
+                    }
+                }
+
+                &:first-child, &:nth-child(2) {
+                    border-right: 1px dashed $borderPrimary;
+                }
+
+                &.profit {
+                    border-radius: 0 0 5px 0;
+                    background-color: $colorFail;
+
+                    &.isProfit {
+                        background-color: $colorSuccess;
+                    }
+                }
+            }
+        }
     }
 </style>

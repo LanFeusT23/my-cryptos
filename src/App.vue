@@ -6,7 +6,7 @@
         <main>
             <router-view></router-view>
         </main>
-        <footer>
+        <footer style="display: none">
             <button @click="logout">Logout</button>
         </footer>
     </v-app>
@@ -39,10 +39,10 @@
         }
     }
 
-    main > {
-        div {
-            width: 100%;
-        }
+    main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     footer {
