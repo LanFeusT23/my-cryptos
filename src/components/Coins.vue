@@ -43,7 +43,7 @@
         flex-flow: column;
         justify-content: center;
         max-width: 800px;
-        max-width: 420px;
+        min-width: 420px;
         width: 100%;
 
         .loader {
