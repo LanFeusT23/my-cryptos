@@ -1,6 +1,6 @@
 {
   "name": "my-cryptos",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A display of all my Crytos, their costs and current values.",
   "author": "jonathan hankey <jhankey@blizzard.com>",
   "private": true,
