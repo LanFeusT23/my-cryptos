@@ -1,5 +1,5 @@
 <template>
-    <div id="total-assets-wrapper">
+    <div id="total-assets-wrapper" v-if='dataLoaded'>
         <div>
             <div class='total-assets-title'>Total Assets:</div>
             <div class='total-assets-value'>${{ totalValue }}</div>
@@ -23,6 +23,7 @@
         name: 'TotalAssets',
         computed: {
             ...mapGetters("assets", ["assets"]),
+            ...mapGetters(["dataLoaded"]),
             totalValue() {
                 return sumBy(this.assets, 'totalValue').toFixed(0)
             },
