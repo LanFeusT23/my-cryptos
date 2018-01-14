@@ -6,7 +6,7 @@ export default class AuthRouterGuard {
     guard(router) {
 
         router.beforeEach((to, from, next) => {
-            let userIsLoggedIn = this.authHelpers.getAuth();
+            let userIsLoggedIn = this.authHelpers.getAuthenticatedUser();
 
             if (userIsLoggedIn && to.fullPath === '/') {
                 next({

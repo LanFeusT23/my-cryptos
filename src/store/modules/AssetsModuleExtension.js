@@ -45,9 +45,9 @@ export default class AssetsModuleExtension {
                 updateLastLoaded: (state) => state.lastLoaded = new Date()
             },
             actions: {
-                loadDataAsync({ commit, rootState }, name) {
+                loadDataAsync({ commit, rootState }) {
 
-                    return self.firebaseRepository.getAssetsAsync(rootState.user.refreshToken).then(assetsData => {
+                    return self.firebaseRepository.getAssetsAsync(rootState.user).then(assetsData => {
                         var assetsArray = Object.keys(assetsData).map(assetKey => {
                             return {
                                 ...assetsData[assetKey]

@@ -11,7 +11,7 @@ export default class AuthHelpers {
         });
     }
 
-    getAuth() {
+    getAuthenticatedUser() {
         return this.store.getters.user  
     }
     

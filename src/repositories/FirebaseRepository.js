@@ -1,11 +1,12 @@
 import fetchival from "fetchival";
 import { ref } from '@/auth/constants'
 
+
 export default class FirebaseRepository {
     constructor() {
     }
 
-    async getAssetsAsync(refreshToken) {
-        return fetchival('https://our-cryptos.firebaseio.com/assets.json?auth=' + refreshToken).get()
+    async getAssetsAsync(user) {
+        return fetchival(`https://our-cryptos.firebaseio.com/users/${user.uid}/assets.json?auth=` + user.refreshToken).get()
     }
 }

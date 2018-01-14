@@ -28,10 +28,12 @@
             ...mapActions("prices", ["loadPricesAsync"]),
         },
         created() {
-            this.loading = true
-            Promise.all([this.loadDataAsync(), this.loadPricesAsync()]).then(() => {
-                this.loading = false
-            })
+            this.loading = true;
+            this.loadDataAsync().then(assets => {
+                this.loadPricesAsync(assets).then(() => {
+                    this.loading = false;
+                })
+            });
         }
     }
 </script>

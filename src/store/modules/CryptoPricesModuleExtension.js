@@ -17,10 +17,13 @@ export default class CryptoPricesModuleExtension {
                 setPrices: (state, usdPrices) => state.pricesInUSD = usdPrices
             },
             actions: {
-                loadPricesAsync({ commit }, name) {
+                loadPricesAsync({ commit, rootGetters }, assets) {
                     var usdPrices = {}
+                    var coins = assets.map(asset => {
+                        return asset.id;
+                    });
 
-                    return self.cryptoPricesRepository.getPrices()
+                    return self.cryptoPricesRepository.getPrices(coins)
                         .then(prices => {
                             Object.keys(prices).map(key => {
                                 usdPrices[key] = prices[key].USD
