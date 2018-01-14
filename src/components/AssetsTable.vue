@@ -4,9 +4,9 @@
             <div class="coin-info">
                 <a class="icon" :class='getCssClass(asset)' :href='asset.chartsUrl' target='_blank'></a>
                 <div class="coin-name-wrapper">
-                        <span class="coin-name">{{ asset.id }}</span>
-                        <span class="coin-value">(${{ asset.coinValue }})</span>
-                    </div>
+                    <span class="coin-name">{{ asset.id }}</span>
+                    <span class="coin-value">(${{ asset.coinValue }})</span>
+                </div>
                 <div class="count">{{ asset.coinCount }}</div>
                 <div class="total-value">
                     <div class='total-value-title'>Total</div>
