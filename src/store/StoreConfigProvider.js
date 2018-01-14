@@ -31,7 +31,8 @@ export default class StoreConfigProvider {
                     commit('setUser', {
                         uid: user.uid,
                         refreshToken: user.token,
-                        email: user.email
+                        email: user.email,
+                        readFrom: user.readFrom
                     })
                 },
                 clearUser({ commit }) {

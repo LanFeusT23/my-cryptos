@@ -56,6 +56,13 @@ export default class AssetsModuleExtension {
                         userData = {};
                     }
 
+                    if (userData.readFrom) {
+                        userData = await self.firebaseRepository.getUserDataAsync({
+                            ...rootState.user,
+                            uid: userData.readFrom
+                        })
+                    }
+
                     if (!userData.assets) {
                         userData = {
                             assets: {}
