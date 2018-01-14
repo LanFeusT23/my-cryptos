@@ -24,7 +24,7 @@ const appBinding = function (Vue) {
     injector.constant("inDev", process.env.NODE_ENV !== "production");
     injector.constant("window", window);
 
-    injector.service("authHelpers", ["store"], AuthHelpers);
+    injector.service("authHelpers", ["store", "router"], AuthHelpers);
     injector.service("routesProvider", RoutesProvider);
 
     injector.factory("router", ["routesProvider"], (routesProvider) => {
@@ -51,8 +51,7 @@ const appBinding = function (Vue) {
     let router = injector.get("router")
     sync(store, router);
     
-    let authHelpers = injector.get("authHelpers")
-    var routerGuard = new AuthRouterGuard(authHelpers)
+    var routerGuard = new AuthRouterGuard(store)
     routerGuard.guard(router)
 
     return injector;

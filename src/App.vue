@@ -6,16 +6,21 @@
         <main>
             <router-view></router-view>
         </main>
-        <footer style="display: none">
-            <button @click="logout">Logout</button>
+        <footer v-show='isLoggedIn'>
+            <v-btn flat dark @click="logout">Logout</v-btn>
         </footer>
     </v-app>
 </template>
 
 <script>
+    import { mapGetters } from 'vuex';
+
     export default {
         name: 'app',
         dependencies: ['authHelpers'],
+        computed: {
+            ...mapGetters(['isLoggedIn'])
+        },
         methods: {
             logout() {
                 this.authHelpers.logout()
@@ -46,6 +51,9 @@
     }
 
     footer {
-        padding: 0 $size14px
+        padding: 0 $size14px;
+        display: flex;
+        justify-content: center;
+        margin-bottom: 1rem;
     }
 </style>

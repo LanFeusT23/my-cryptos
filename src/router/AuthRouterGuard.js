@@ -1,12 +1,12 @@
 export default class AuthRouterGuard {
-    constructor(authHelpers) {
-        this.authHelpers = authHelpers
+    constructor(store) {
+        this.store = store
     }
 
     guard(router) {
 
         router.beforeEach((to, from, next) => {
-            let userIsLoggedIn = this.authHelpers.getAuthenticatedUser();
+            let userIsLoggedIn = this.store.state.user;
 
             if (userIsLoggedIn && to.fullPath === '/') {
                 next({

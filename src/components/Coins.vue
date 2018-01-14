@@ -1,9 +1,14 @@
 <template>
-    <div class='assets' :class='{ loading: loading }'>
+    <div class='assets' :class="{ loading: loading }">
         <v-progress-circular class='loader' v-if='loading && !error' indeterminate v-bind:size="70" v-bind:width="5"></v-progress-circular>
 
-        <TotalAssets class='assets-section' v-if='!loading && !error'></TotalAssets>
-        <AssetsTable class='assets-section' v-if='!loading && !error'></AssetsTable>
+        <template v-if="!loading && !error && hasData">
+            <TotalAssets class='assets-section'></TotalAssets>
+            <AssetsTable class='assets-section'></AssetsTable>
+        </template>
+        <template v-if="!error && !hasData && !loading">
+            <h1>No data set yet! Forms to be coming!</h1>
+        </template>
 
         <v-alert color='error' icon='fa-exclamation-triangle' class="error-message" v-model='showErrorMsg'>
             Something went wrong!
@@ -14,7 +19,7 @@
 <script>
     import TotalAssets from '@/components/TotalAssets.vue'
     import AssetsTable from '@/components/AssetsTable.vue'
-    import { mapActions } from 'vuex'
+    import { mapActions, mapGetters, mapState } from 'vuex'
 
     export default {
         name: 'Coins',
@@ -23,13 +28,9 @@
             TotalAssets,
             AssetsTable
         },
-        data() {
-            return {
-                loading: false,
-                error: false
-            }
-        },
         computed: {
+            ...mapState(["loading", "error"]),
+            ...mapGetters("assets", ["hasData"]),
             showErrorMsg() {
                 return !this.loading && this.error;
             }  
@@ -39,16 +40,7 @@
             ...mapActions("prices", ["loadPricesAsync"]),
         },
         created() {
-            this.loading = true;
-            this.loadDataAsync().then(assets => {
-                this.loadPricesAsync(assets).then(() => {
-                    this.loading = false;
-                })
-            }).catch(() => {
-                this.error = true;
-            }).then(() => {                
-                this.loading = false;
-            });
+            this.$store.dispatch("loadAllData")
         }
     }
 </script>
@@ -71,10 +63,6 @@
 
         &.loading {
             align-items: center;
-            
-            .assets-section {
-                display: none;
-            }
         }
     }
 </style>

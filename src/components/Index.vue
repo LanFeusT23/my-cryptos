@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-btn color="primary" @click.native="login" :loading="loading">
+        <v-btn class='sign-in' color="primary" @click.native="login" :loading="loading">
             <i class="fa fa-google"></i>
             Sign with Google...
         </v-btn>
@@ -37,3 +37,11 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .sign-in {
+        .fa {
+            margin-right: 5px;
+        }
+    }
+</style>

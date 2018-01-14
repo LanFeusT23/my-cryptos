@@ -1,18 +1,15 @@
 import { firebaseAuth, googleProvider } from '@/auth/constants';
 
 export default class AuthHelpers {
-    constructor (store) {
-        this.store = store
+    constructor (store, router) {
+        this.store = store;
+        this.router = router;
     }
 
     loginWithGoogle() {
         firebaseAuth().signInWithRedirect(googleProvider).catch(function(error){
             alert(error);
         });
-    }
-
-    getAuthenticatedUser() {
-        return this.store.getters.user  
     }
     
     setAuth(authData) {
@@ -24,7 +21,8 @@ export default class AuthHelpers {
     
     logout() {
         this.setAuth(null)
-        return firebaseAuth().signOut();
+        firebaseAuth().signOut();
+        this.router.push({ path: '/' })
     }
     
     startAsync() {

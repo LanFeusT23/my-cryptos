@@ -16,9 +16,12 @@ export default class AssetsModuleExtension {
                 localAssets: []
             },
             getters: {
+                hasData(state) {
+                    return state.localAssets.length > 0;
+                },
                 assets(state, getters, rootState, rootGetters) {
                     let prices = rootState.prices.pricesInUSD
-                    if (!rootGetters.dataLoaded) {
+                    if (rootGetters.loading) {
                         return []
                     }
 
@@ -45,21 +48,29 @@ export default class AssetsModuleExtension {
                 updateLastLoaded: (state) => state.lastLoaded = new Date()
             },
             actions: {
-                loadDataAsync({ commit, rootState }) {
+                async loadDataAsync({ commit, rootState }) {
 
-                    return self.firebaseRepository.getAssetsAsync(rootState.user).then(assetsData => {
-                        var assetsArray = Object.keys(assetsData).map(assetKey => {
-                            return {
-                                ...assetsData[assetKey]
-                            }
-                        })
+                    let userData = await self.firebaseRepository.getUserDataAsync(rootState.user)
+                    if (userData === null) {
+                        await self.firebaseRepository.createUser(rootState.user);
+                        userData = {};
+                    }
 
-                        commit("setAssetsData", assetsArray);
-                        commit("updateLastLoaded");
+                    if (!userData.assets) {
+                        userData = {
+                            assets: {}
+                        }
+                    }
+                    var assetsArray = Object.keys(userData.assets).map(assetKey => {
+                        return {
+                            ...userData.assets[assetKey]
+                        }
+                    })
 
-                        return assetsArray;
-                    });
+                    commit("setAssetsData", assetsArray);
+                    commit("updateLastLoaded");
 
+                    return assetsArray;
                 }
             }
         }

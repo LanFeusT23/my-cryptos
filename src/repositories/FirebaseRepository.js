@@ -6,7 +6,13 @@ export default class FirebaseRepository {
     constructor() {
     }
 
-    async getAssetsAsync(user) {
-        return fetchival(`https://our-cryptos.firebaseio.com/users/${user.uid}/assets.json?auth=` + user.refreshToken).get()
+    getUserDataAsync(user) {
+        return fetchival(`https://our-cryptos.firebaseio.com/users/${user.uid}.json?auth=` + user.refreshToken).get()
+    }
+
+    createUser(user) {
+        return fetchival(`https://our-cryptos.firebaseio.com/users/${user.uid}.json?auth=` + user.refreshToken).put({
+            email: user.email
+        })
     }
 }

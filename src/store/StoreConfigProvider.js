@@ -11,34 +11,43 @@ export default class StoreConfigProvider {
         var storeConfig = {
             strict: this.strictMode,
             state: {
-                user: undefined
+                user: undefined,
+                loading: false,
+                error: false
             },
             getters: {
-                dataLoaded(state) {
-                    let prices = state.prices.pricesInUSD
-                    if ((Object.keys(prices).length === 0 && prices.constructor === Object) || state.assets.localAssets.length === 0) {
-                        return false
-                    }
-
-                    return true
-                },
-                user(state) {
-                    return state.user
+                isLoggedIn(state) {
+                    return state.user !== null && state.user !== undefined;
                 }
             },
             mutations: {
                 setUser: (state, user) => state.user = user,
+                setLoading: (state, loading) => state.loading = loading,
+                setError: (state, error) => state.user = error,
                 clearUser: (state) => state.user = undefined
             },
             actions: {
                 setUser({ commit }, user) {
                     commit('setUser', {
                         uid: user.uid,
-                        refreshToken: user.token
+                        refreshToken: user.token,
+                        email: user.email
                     })
                 },
                 clearUser({ commit }) {
                     commit('clearUser')
+                },
+                loadAllData({ commit, dispatch }) {
+                    commit("setLoading", true)
+                    return dispatch("assets/loadDataAsync").then(assets => {
+                        return dispatch("prices/loadPricesAsync", assets)                            
+                            .catch(() => {
+                                commit("setError", false)
+                            })
+                            .then(() => {
+                                commit("setLoading", false)
+                            })
+                    })
                 }
             },
             modules: {
