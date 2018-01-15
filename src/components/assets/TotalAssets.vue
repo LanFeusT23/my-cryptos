@@ -43,7 +43,6 @@
     #total-assets-wrapper {
         margin-bottom: 1rem;
         font-weight: 400;
-        font-style: italic;
 
         > div {
             display: flex;

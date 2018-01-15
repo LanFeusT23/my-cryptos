@@ -1,5 +1,3 @@
-import format from 'string-format'
-const CHARTS_URL = 'https://www.cryptocompare.com/coins/{0}/overview/{1}'
 
 export default class AssetsModuleExtension {
     constructor(firebaseRepository) {
@@ -13,11 +11,11 @@ export default class AssetsModuleExtension {
         return {
             namespaced: true,
             state: {
-                localAssets: []
+                basicAssets: []
             },
             getters: {
                 hasData(state) {
-                    return state.localAssets.length > 0;
+                    return state.basicAssets.length > 0;
                 },
                 assets(state, getters, rootState, rootGetters) {
                     let prices = rootState.prices.pricesInUSD
@@ -25,7 +23,7 @@ export default class AssetsModuleExtension {
                         return []
                     }
 
-                    return state.localAssets.map(asset => {
+                    return state.basicAssets.map(asset => {
                         var assetPrice = prices[asset.id];
                         var totalValue = assetPrice * asset.coinCount;
                         var profit = totalValue - asset.investment;
@@ -37,14 +35,13 @@ export default class AssetsModuleExtension {
                             totalValue: Math.trunc(totalValue),
                             profit: +profit.toFixed(0),
                             isProfit: profit >= 0,
-                            roi: +(profit / asset.investment * 100).toFixed(2),
-                            chartsUrl: format(CHARTS_URL, asset.id.toLowerCase(), 'usd')
+                            roi: +(profit / asset.investment * 100).toFixed(2)
                         }
                     })
                 }
             },
             mutations: {
-                setAssetsData: (state, assetsData) => state.localAssets = assetsData,
+                setAssetsData: (state, assetsData) => state.basicAssets = assetsData,
                 updateLastLoaded: (state) => state.lastLoaded = new Date()
             },
             actions: {

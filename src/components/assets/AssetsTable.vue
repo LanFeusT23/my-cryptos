@@ -2,7 +2,7 @@
     <div id="assets-table-wrapper">
         <div class='asset-card' v-for='asset in sortedAssets' :key='asset.id'>
             <div class="coin-info">
-                <a class="icon" :class='getCssClass(asset)' :href='asset.chartsUrl' target='_blank'></a>
+                <IconLink :assetName="asset.id"></IconLink>
                 <div class="coin-name-wrapper">
                     <span class="coin-name">{{ asset.id }}</span>
                     <span class="coin-value">(${{ asset.coinValue }})</span>
@@ -10,7 +10,7 @@
                 <div class="count">{{ asset.coinCount }}</div>
                 <div class="total-value">
                     <div class='total-value-title'>Total</div>
-                    <div>${{ asset.totalValue }}</div>                    
+                    <div>${{ asset.totalValue }}</div>
                 </div>
             </div>
             <div class='meta-info'>
@@ -30,22 +30,20 @@
 </template>
 
 <script>
+    import IconLink from "@/components/common/IconLink.vue"
+    import orderBy from "lodash/orderBy";
     import { mapGetters } from "vuex";
     import { mapState } from "vuex";
 
     export default {
         name: 'AssetsTable',
+        components: {
+            IconLink
+        },
         computed: {
             ...mapGetters("assets", ["assets"]),
             sortedAssets() {
-                return this.assets.sort((a, b) => {
-                    return a.totalValue < b.totalValue
-                })
-            }
-        },
-        methods: {
-            getCssClass(asset) {
-                return `icon-asset-${asset.id.toLowerCase()}`
+                return orderBy(this.assets, ['totalValue'], ['desc']);
             }
         }
     }
@@ -90,12 +88,6 @@
                 "icon       coin-name"
                 "count      total-value"   
                 "meta-info  meta-info";
-                
-            .icon {
-                background-size: 46px;
-                background-position: center;
-                background-repeat: no-repeat;
-            }
 
             .coin-name-wrapper {
                 font-weight: 200;

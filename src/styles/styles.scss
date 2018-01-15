@@ -28,58 +28,56 @@ body {
     }
 }
 
-.asset-card {
-    .icon {        
-        &.icon-asset-xrp {
-            background-image: url('./images/crypto-icons/xrp@2x.png')
-        }
-        
-        &.icon-asset-btc {
-            background-image: url('./images/crypto-icons/btc@2x.png')
-        }
-        
-        &.icon-asset-eth {
-            background-image: url('./images/crypto-icons/eth@2x.png')
-        }
-        
-        &.icon-asset-strat {
-            background-image: url('./images/crypto-icons/strat@2x.png')
-        }
-        
-        &.icon-asset-gnt {
-            background-image: url('./images/crypto-icons/gnt@2x.png')
-        }
-        
-        &.icon-asset-maid {
-            background-image: url('./images/crypto-icons/maid@2x.png')
-        }
-        
-        &.icon-asset-lsk {
-            background-image: url('./images/crypto-icons/lsk@2x.png')
-        }
-        
-        &.icon-asset-ltc {
-            background-image: url('./images/crypto-icons/ltc@2x.png')
-        }
-        
-        &.icon-asset-xlm {
-            background-image: url('./images/crypto-icons/xlm@2x.png')
-        }
-        
-        &.icon-asset-eos {
-            background-image: url('./images/crypto-icons/eos@2x.png')
-        }
-        
-        &.icon-asset-ada {
-            background-image: url('./images/crypto-icons/ada@2x.png')
-        }
-        
-        &.icon-asset-eng {
-            background-image: url('./images/crypto-icons/eng@2x.png')
-        }
-        
-        &.icon-asset-iota {
-            background-image: url('./images/crypto-icons/miota@2x.png')
-        }
+.icon {        
+    &.icon-asset-xrp {
+        background-image: url('./images/crypto-icons/xrp@2x.png')
+    }
+    
+    &.icon-asset-btc {
+        background-image: url('./images/crypto-icons/btc@2x.png')
+    }
+    
+    &.icon-asset-eth {
+        background-image: url('./images/crypto-icons/eth@2x.png')
+    }
+    
+    &.icon-asset-strat {
+        background-image: url('./images/crypto-icons/strat@2x.png')
+    }
+    
+    &.icon-asset-gnt {
+        background-image: url('./images/crypto-icons/gnt@2x.png')
+    }
+    
+    &.icon-asset-maid {
+        background-image: url('./images/crypto-icons/maid@2x.png')
+    }
+    
+    &.icon-asset-lsk {
+        background-image: url('./images/crypto-icons/lsk@2x.png')
+    }
+    
+    &.icon-asset-ltc {
+        background-image: url('./images/crypto-icons/ltc@2x.png')
+    }
+    
+    &.icon-asset-xlm {
+        background-image: url('./images/crypto-icons/xlm@2x.png')
+    }
+    
+    &.icon-asset-eos {
+        background-image: url('./images/crypto-icons/eos@2x.png')
+    }
+    
+    &.icon-asset-ada {
+        background-image: url('./images/crypto-icons/ada@2x.png')
+    }
+    
+    &.icon-asset-eng {
+        background-image: url('./images/crypto-icons/eng@2x.png')
+    }
+    
+    &.icon-asset-iota {
+        background-image: url('./images/crypto-icons/miota@2x.png')
     }
 }

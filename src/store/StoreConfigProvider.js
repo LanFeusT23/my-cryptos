@@ -1,8 +1,9 @@
 export default class StoreConfigProvider {
-    constructor(strictMode, assetsModuleExtension, cryptoPricesModuleExtension) {
+    constructor(strictMode, assetsModuleExtension, cryptoPricesModuleExtension, manageModuleExtension) {
         this.strictMode = strictMode;
         this.assetsModule = assetsModuleExtension.get();
         this.pricesModule = cryptoPricesModuleExtension.get();
+        this.manageModule = manageModuleExtension.get();
     }
 
     get() {
@@ -53,7 +54,8 @@ export default class StoreConfigProvider {
             },
             modules: {
                 assets: this.assetsModule,
-                prices: this.pricesModule
+                prices: this.pricesModule,
+                manage: this.manageModule
             }
         };
 

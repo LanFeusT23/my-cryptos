@@ -7,6 +7,7 @@ import Vuex from "vuex";
 
 import RoutesProvider from "@/router/RoutesProvider";
 import AssetsModuleExtension from "@/store/modules/AssetsModuleExtension";
+import ManageModuleExtension from "@/store/modules/ManageModuleExtension";
 import CryptoPricesModuleExtension from "@/store/modules/CryptoPricesModuleExtension";
 import StoreConfigProvider from "@/store/StoreConfigProvider";
 import FirebaseRepository from "@/repositories/FirebaseRepository";
@@ -39,8 +40,9 @@ const appBinding = function (Vue) {
     injector.service("cryptoPricesRepository", CryptoPricesRepository);
 
     injector.service("assetsModuleExtension", ["firebaseRepository"], AssetsModuleExtension);
+    injector.service("manageModuleExtension", ["firebaseRepository"], ManageModuleExtension);
     injector.service("cryptoPricesModuleExtension", ["cryptoPricesRepository"], CryptoPricesModuleExtension);
-    injector.service("storeConfigProvider", ["inDev", "assetsModuleExtension", "cryptoPricesModuleExtension"], StoreConfigProvider);
+    injector.service("storeConfigProvider", ["inDev", "assetsModuleExtension", "cryptoPricesModuleExtension", "manageModuleExtension"], StoreConfigProvider);
 
     injector.factory("store", ["storeConfigProvider"], (storeConfigProvider) => {
         var storeConfig = storeConfigProvider.get();

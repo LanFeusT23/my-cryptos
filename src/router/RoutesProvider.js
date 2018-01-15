@@ -1,5 +1,6 @@
 import Index from '@/components/Index.vue'
-const Coins = () => import(/* webpackChunkName: "Index" */ "@/components/Coins.vue");
+const Coins = () => import(/* webpackChunkName: "Coins" */ "@/components/assets/Coins.vue");
+const ManageAssets = () => import(/* webpackChunkName: "ManageAssets" */ "@/components/manage/ManageAssets.vue");
 
 export default class RoutesProvider {
     constructor() { }
@@ -15,7 +16,8 @@ export default class RoutesProvider {
                     }
                 }
             },
-            { path: "/coins", component: Coins, meta: { requiresAuth: true } }
+            { path: "/coins", component: Coins, meta: { requiresAuth: true } },
+            { path: "/manage", component: ManageAssets, meta: { requiresAuth: true } }
         ];
     }
 

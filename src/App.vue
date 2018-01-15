@@ -3,8 +3,9 @@
         <header>
             <h1>Our Cryptos</h1>
         </header>
-        <main>
-            <router-view></router-view>
+        <main :class='{ loading: loading }'>
+            <v-progress-circular class='loader' v-show='loading && !error' indeterminate v-bind:size="70" v-bind:width="5"></v-progress-circular>
+            <router-view v-if="!loading && !error"></router-view>
         </main>
         <footer v-show='isLoggedIn'>
             <v-btn flat dark @click="logout">Logout</v-btn>
@@ -13,17 +14,23 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex';
+    import { mapGetters, mapState } from 'vuex';
 
     export default {
         name: 'app',
         dependencies: ['authHelpers'],
         computed: {
+            ...mapState(["loading", "error"]),
             ...mapGetters(['isLoggedIn'])
         },
         methods: {
             logout() {
                 this.authHelpers.logout()
+            }
+        },
+        created() {
+            if (this.isLoggedIn){
+                this.$store.dispatch("loadAllData")
             }
         }
     }
@@ -46,8 +53,17 @@
 
     main {
         display: flex;
-        align-items: center;
         justify-content: center;
+
+        &.loading {
+            align-items: center;
+        }
+    }
+
+    .loader {
+        svg circle {
+            stroke: $borderSecondary
+        }
     }
 
     footer {
