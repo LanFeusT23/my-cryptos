@@ -23,7 +23,7 @@
             </v-list>
             <v-list class="pt-0" dense>
                 <v-divider light></v-divider>
-                <v-list-tile v-for="item in items" :key="item.title" @click="goTo(item.route)">
+                <v-list-tile v-for="item in items" :key="item.title" @click="navigate(item.route)">
                     <v-list-tile-action>
                         <v-icon>{{ item.icon }}</v-icon>
                     </v-list-tile-action>
@@ -54,7 +54,7 @@
             ...mapState(["user"])
         },
         methods: {
-            goTo(route) {
+            navigate(route) {
                 this.$router.push(route);
             }
         }
