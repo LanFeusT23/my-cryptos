@@ -184,6 +184,7 @@
 
 <style lang='scss'>
     #management-wrapper {
+        @include maxWidth;
         position: relative;
         width: 100%;
         padding: $size14px;

@@ -36,6 +36,12 @@
     white-space: nowrap;
 }
 
+@mixin maxWidth {
+    max-width: 800px;
+    min-width: 420px;
+    width: 100%;
+}
+
 @mixin borderTable($radius, $borderColor) {
     border-spacing: 0;
 

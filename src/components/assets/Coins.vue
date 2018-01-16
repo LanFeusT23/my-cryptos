@@ -38,12 +38,10 @@
 
 <style lang='scss' scoped>
     .assets {
+        @include maxWidth;
         padding: $size14px;
         display: flex;
         flex-flow: column;
         justify-content: flex-start;
-        max-width: 800px;
-        min-width: 420px;
-        width: 100%;
     }
 </style>
