@@ -31,7 +31,7 @@ export default class AuthHelpers {
                 if (user) {                
                     firebaseAuth().currentUser.getIdToken().then(token => {
                         user.token = token
-                        //console.log("user authenticated", user)
+                        console.log("user authenticated", user)
                         resolve(this.setAuth(user))
                     })                    
                 } else {

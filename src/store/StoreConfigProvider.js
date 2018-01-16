@@ -27,10 +27,12 @@ export default class StoreConfigProvider {
                 clearUser: (state) => state.user = undefined
             },
             actions: {
-                setUser({ commit }, user) {
+                setUser({ commit }, user) {                    
                     commit('setUser', {
                         uid: user.uid,
                         refreshToken: user.token,
+                        displayName: user.displayName,
+                        photoURL: user.photoURL,
                         email: user.email,
                         readFrom: user.readFrom
                     })
