@@ -39,20 +39,6 @@
 </script>
 
 <style lang='scss'>
-    // header {
-    //     display: flex;
-    //     justify-content: center;
-    //     align-items: center;
-    //     height: 5.25rem;
-    //     background: #242426;
-    //     border-bottom: 2px solid #4dadf9;
-
-    //     h1 {
-    //         font-style: italic;
-    //         font-weight: 400;
-    //     }
-    // }
-
     main {
         display: flex;
         justify-content: center;

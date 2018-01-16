@@ -1,5 +1,7 @@
 <template>
     <div id="management-wrapper">
+        <NewAsset></NewAsset>
+        
         <table>
             <thead>
                 <tr>
@@ -19,6 +21,13 @@
                         {{ asset.id }}
                     </td>
                     <td class="asset-count">
+                        <!-- <AssetInput
+                            :editing="editedCoins[asset.id].editing"
+                            :valueBound="editedCoins[asset.id].coinCount"
+                            :assetId="asset.id"
+                            label="Amount"
+                        ></AssetInput> -->
+
                         <template v-if="editedCoins[asset.id].editing">
                             <v-text-field
                                 name="input-coin-count"
@@ -34,6 +43,12 @@
                         </template>
                     </td>
                     <td class="asset-investment">
+                        <!-- <AssetInput
+                            :editing="editedCoins[asset.id].editing"
+                            :valueBound="editedCoins[asset.id].investment"
+                            :assetId="asset.id"
+                            label="Investment"
+                        ></AssetInput> -->
 
                         <template v-if="editedCoins[asset.id].editing">
                             <v-text-field
@@ -91,6 +106,8 @@
 </template>
 
 <script>
+    import AssetInput from "@/components/manage/AssetInput.vue"
+    import NewAsset from "@/components/manage/NewAsset.vue"
     import IconLink from "@/components/common/IconLink.vue"
     import { mapGetters, mapState, mapMutations } from "vuex";
     import sortBy from "lodash/sortBy";
@@ -98,7 +115,9 @@
     export default {
         name: 'ManageAssets',
         components: {
-            IconLink
+            IconLink,
+            AssetInput,
+            NewAsset
         },
         data() {
             return {
@@ -118,6 +137,11 @@
             ...mapState("assets", ["basicAssets"]),
             sortedAssets() {
                 return sortBy(this.basicAssets, 'id');
+            }
+        },
+        watch: {
+            basicAssets(value) {
+                this.updateEditedCoinsObj(value)
             }
         },
         methods: {
@@ -140,23 +164,27 @@
                     investment: +thisCoin.investment
                 })
                 this.editedCoins[data.id].editing = false;
+            },
+            updateEditedCoinsObj(data) {
+                data.map(a => {
+                    this.$set(this.editedCoins, a.id, {
+                        editing: false,
+                        coinCount: a.coinCount,
+                        investment: a.investment,
+                        dialog: false
+                    })
+                })
             }
         },
         created() {
-            this.basicAssets.map(a => {
-                this.$set(this.editedCoins, a.id, {
-                    editing: false,
-                    coinCount: a.coinCount,
-                    investment: a.investment,
-                    dialog: false
-                })
-            })
+            this.updateEditedCoinsObj(this.basicAssets)
         }
     }
 </script>
 
 <style lang='scss'>
     #management-wrapper {
+        position: relative;
         width: 100%;
         padding: $size14px;
 

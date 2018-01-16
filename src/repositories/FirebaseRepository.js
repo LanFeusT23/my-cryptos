@@ -21,6 +21,14 @@ export default class FirebaseRepository {
         return fetchival(`https://our-cryptos.firebaseio.com/users/${user.uid}/assets/${assetId}.json?auth=` + user.refreshToken).delete()
     }
 
+    addCoin(user, { assetId, coinCount, investment }) {
+        return fetchival(`https://our-cryptos.firebaseio.com/users/${user.uid}/assets/${assetId}.json?auth=` + user.refreshToken).put({
+            coinCount,
+            investment,
+            id: assetId
+        })
+    }
+
     createUser(user) {
         return fetchival(`https://our-cryptos.firebaseio.com/users/${user.uid}.json?auth=` + user.refreshToken).put({
             email: user.email

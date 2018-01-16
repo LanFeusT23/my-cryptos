@@ -57,6 +57,13 @@ export default class AssetsModuleExtension {
                     asset.coinCount = coinCount;
                     asset.investment = investment;
                 },
+                addAsset: (state, { assetId, coinCount, investment }) => {                    
+                    state.basicAssets.push({
+                        id: assetId,
+                        coinCount,
+                        investment
+                    });
+                },
                 deleteAsset: (state, assetId) => {
                     let index = state.basicAssets.findIndex(a => {
                         return a.id === assetId
@@ -109,6 +116,14 @@ export default class AssetsModuleExtension {
                         investment
                     })
                     commit("toggleEditedAsset", assetId)
+                },
+                async addAssetAsync({ commit, rootState }, { assetId, coinCount, investment }) {
+                    await self.firebaseRepository.addCoin(rootState.user, { assetId, coinCount, investment });
+                    commit("addAsset", {
+                        assetId, 
+                        coinCount, 
+                        investment
+                    })
                 }
             }
         }
