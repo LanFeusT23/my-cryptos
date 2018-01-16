@@ -5,24 +5,24 @@
                 <IconLink :assetName="asset.id"></IconLink>
                 <div class="coin-name-wrapper">
                     <span class="coin-name">{{ asset.id }}</span>
-                    <span class="coin-value">(${{ asset.coinValue }})</span>
+                    <span class="coin-value">(${{ asset.coinValue | commaNumbers }})</span>
                 </div>
-                <div class="count">{{ asset.coinCount }}</div>
+                <div class="count">{{ asset.coinCount | commaNumbers }}</div>
                 <div class="total-value">
                     <div class='total-value-title'>Total</div>
-                    <div>${{ asset.totalValue }}</div>
+                    <div>${{ asset.totalValue | commaNumbers }}</div>
                 </div>
             </div>
             <div class='meta-info'>
                 <div class="roi">
-                    {{ asset.roi }}%
+                    {{ asset.roi | commaNumbers }}%
                 </div>
                 <div class="invested">
                     <i class="fa fa-credit-card"></i>
-                    ${{ asset.investment }}
+                    ${{ asset.investment | commaNumbers }}
                 </div>
                 <div class="profit" :class='{ isProfit: asset.isProfit }'>
-                    ${{ asset.profit }}
+                    ${{ asset.profit | commaNumbers }}
                 </div>
             </div>
         </div>

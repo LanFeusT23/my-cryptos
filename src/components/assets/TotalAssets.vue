@@ -2,15 +2,15 @@
     <div id="total-assets-wrapper">
         <div>
             <div class='total-assets-title'>Total Assets:</div>
-            <div class='total-assets-value'>${{ totalValue }}</div>
+            <div class='total-assets-value'>${{ totalValue | commaNumbers }}</div>
         </div>
         <div>
             <div class='total-assets-title'>Investment:</div>
-            <div class='total-assets-value'>${{ totalInvestment }}</div>
+            <div class='total-assets-value'>${{ totalInvestment | commaNumbers }}</div>
         </div>
         <div>
             <div class='total-assets-title'>Profit:</div>
-            <div class='total-assets-value' :class='{ isProfit: isProfit }'>${{ profit }}</div>
+            <div class='total-assets-value' :class='{ isProfit: isProfit }'>${{ profit | commaNumbers }}</div>
         </div>
     </div>
 </template>

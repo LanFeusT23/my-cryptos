@@ -4,6 +4,7 @@ import Vuetify from "vuetify"
 
 import { sync } from "vuex-router-sync";
 import Vuex from "vuex";
+import commaNumbers from "@/filters/commaNumbers"
 
 import RoutesProvider from "@/router/RoutesProvider";
 import AssetsModuleExtension from "@/store/modules/AssetsModuleExtension";
@@ -56,6 +57,8 @@ const appBinding = function (Vue) {
     var routerGuard = new AuthRouterGuard(store)
     routerGuard.guard(router)
 
+    Vue.filter("commaNumbers", commaNumbers)
+    
     return injector;
 };
 
