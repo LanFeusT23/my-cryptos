@@ -189,6 +189,10 @@
 
                 &.actions {
                     width: 40px;
+
+                    * {
+                        outline: none;
+                    }
                     
                     button:first-child {
                         margin-right: 3px;
