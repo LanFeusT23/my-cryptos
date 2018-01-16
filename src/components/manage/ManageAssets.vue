@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>Name</th>
+                    <th></th>
                     <th>Amount</th>
                     <th>Invested</th>
                     <th></th>
@@ -19,12 +19,12 @@
                         {{ asset.id }}
                     </td>
                     <td class="asset-count">
-                        <template v-if="asset.editing">
+                        <template v-if="editedCoins[asset.id].editing">
                             <v-text-field
                                 name="input-coin-count"
                                 class="input-coin"
                                 label="Amount"
-                                :value="asset.coinCount"
+                                v-model="editedCoins[asset.id].coinCount"
                                 :rules="[rules.required, rules.number]"
                                 single-line>
                             </v-text-field>
@@ -34,22 +34,26 @@
                         </template>
                     </td>
                     <td class="asset-investment">
-                        <template v-if="asset.editing">
+
+                        <template v-if="editedCoins[asset.id].editing">
                             <v-text-field
-                                name="input-coin-count"
+                                name="input-coin-investment"
                                 class="input-coin"
                                 label="Investment"
-                                :value="asset.investment"
+                                v-model="editedCoins[asset.id].investment"
                                 :rules="[rules.required, rules.number]"
                                 single-line>
                             </v-text-field>
                         </template>
+
                         <template v-else>
                             {{ asset.investment }}
                         </template>
+
                     </td>
                     <td class="actions">
-                        <template v-if="asset.editing">
+
+                        <template v-if="editedCoins[asset.id].editing">
                             <button @click='saveAsset(asset)'>
                                 <i class="fa fa-floppy-o"></i>
                             </button>
@@ -57,14 +61,28 @@
                                 <i class="fa fa-ban"></i>
                             </button>
                         </template>
+
                         <template v-else>
                             <button @click='editAsset(asset)'>
                                 <i class="fa fa-pencil"></i>
                             </button>
-                            <button @click='deleteAsset(asset)'>
-                                <i class="fa fa-trash"></i>
-                            </button>
+
+                            <v-dialog v-model="editedCoins[asset.id].dialog" persistent>
+                                <button slot="activator">
+                                    <i class="fa fa-trash"></i>
+                                </button>
+                                <v-card>
+                                    <v-card-title class="headline">Delete {{ asset.id }}</v-card-title>
+                                    <v-card-text>This cannot be reversed, are you sure you wish to delete {{ asset.id }}?</v-card-text>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+                                        <v-btn color="red darken-1" flat @click.native="editedCoins[asset.id].dialog = false">No</v-btn>
+                                        <v-btn color="green darken-1" flat @click.native="deleteAsset(asset)">Yes</v-btn>
+                                    </v-card-actions>
+                                </v-card>
+                            </v-dialog>
                         </template>
+
                     </td>
                 </tr>
             </tbody>
@@ -84,6 +102,7 @@
         },
         data() {
             return {
+                editedCoins: {},
                 rules: {
                     required: (value) => !!value || 'Required.',
                     number: (value) => {
@@ -103,18 +122,35 @@
         },
         methods: {
             editAsset(data) {
-                this.$store.commit("assets/toggleEditedAsset", data.id)
+                this.editedCoins[data.id].editing = !this.editedCoins[data.id].editing;
             },
-            deleteAsset() {
-                
+            async deleteAsset(data) {
+                this.editedCoins[data.id].dialog = false;
+                await this.$store.dispatch("assets/removeAssetAsync", data.id);
+                delete this.editedCoins[data.id];
             },
-            saveAsset(data) {
-                this.$store.dispatch("assets/saveAssetAsync", {
+            async saveAsset(data) {
+                let thisCoin = this.editedCoins[data.id];
+                // fix validation with 3rd party tool eventually
+                if (isNaN(thisCoin.coinCount) && isNaN(thisCoin.investment)) return;
+
+                await this.$store.dispatch("assets/saveAssetAsync", {
                     assetId: data.id,
-                    coinCount: 12,
-                    investment: 13
+                    coinCount: +thisCoin.coinCount,
+                    investment: +thisCoin.investment
                 })
+                this.editedCoins[data.id].editing = false;
             }
+        },
+        created() {
+            this.basicAssets.map(a => {
+                this.$set(this.editedCoins, a.id, {
+                    editing: false,
+                    coinCount: a.coinCount,
+                    investment: a.investment,
+                    dialog: false
+                })
+            })
         }
     }
 </script>
@@ -132,8 +168,10 @@
             }
 
             td {
+                height: 55px;
+
                 &.icon-cell {
-                    width: 65px;
+                    width: 58px;
 
                     a {
                         width: 50px;
@@ -141,12 +179,20 @@
                     }
                 }
 
-                &.asset-name, &.asset-investment {
-                    width: 70px;
+                &.asset-name {
+                    width: 50px;
                 }
+
+                &.asset-investment {
+                    width: 110px;
+                } 
 
                 &.actions {
                     width: 40px;
+                    
+                    button:first-child {
+                        margin-right: 3px;
+                    }
                 }
 
                 input {

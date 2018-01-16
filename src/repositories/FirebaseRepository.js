@@ -17,6 +17,10 @@ export default class FirebaseRepository {
         })
     }
 
+    deleteCoinAsync(user, assetId) {
+        return fetchival(`https://our-cryptos.firebaseio.com/users/${user.uid}/assets/${assetId}.json?auth=` + user.refreshToken).delete()
+    }
+
     createUser(user) {
         return fetchival(`https://our-cryptos.firebaseio.com/users/${user.uid}.json?auth=` + user.refreshToken).put({
             email: user.email

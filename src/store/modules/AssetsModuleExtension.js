@@ -1,4 +1,3 @@
-
 export default class AssetsModuleExtension {
     constructor(firebaseRepository) {
         this.firebaseRepository = firebaseRepository;
@@ -42,12 +41,7 @@ export default class AssetsModuleExtension {
             },
             mutations: {
                 updateLastLoaded: (state) => state.lastLoaded = new Date(),
-                setAssetsData: (state, assetsData) => {
-                    state.basicAssets = assetsData.map(a => {
-                        a.editing = false
-                        return a
-                    })
-                },
+                setAssetsData: (state, assetsData) => state.basicAssets = assetsData,
                 toggleEditedAsset: (state, assetId) => {
                     var asset = state.basicAssets.find(a => {
                         return a.id === assetId
@@ -62,9 +56,20 @@ export default class AssetsModuleExtension {
 
                     asset.coinCount = coinCount;
                     asset.investment = investment;
+                },
+                deleteAsset: (state, assetId) => {
+                    let index = state.basicAssets.findIndex(a => {
+                        return a.id === assetId
+                    });
+
+                    state.basicAssets.splice(index, 1);
                 }
             },
             actions: {
+                async removeAssetAsync({ commit, rootState }, assetId) {
+                    let results = await self.firebaseRepository.deleteCoinAsync(rootState.user, assetId);
+                    commit("deleteAsset", assetId);
+                },
                 async loadDataAsync({ commit, rootState }) {
 
                     let userData = await self.firebaseRepository.getUserDataAsync(rootState.user)
