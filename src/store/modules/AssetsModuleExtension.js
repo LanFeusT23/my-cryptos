@@ -38,11 +38,31 @@ export default class AssetsModuleExtension {
                             roi: +(profit / asset.investment * 100).toFixed(2)
                         }
                     })
-                }
+                },
             },
             mutations: {
-                setAssetsData: (state, assetsData) => state.basicAssets = assetsData,
-                updateLastLoaded: (state) => state.lastLoaded = new Date()
+                updateLastLoaded: (state) => state.lastLoaded = new Date(),
+                setAssetsData: (state, assetsData) => {
+                    state.basicAssets = assetsData.map(a => {
+                        a.editing = false
+                        return a
+                    })
+                },
+                toggleEditedAsset: (state, assetId) => {
+                    var asset = state.basicAssets.find(a => {
+                        return a.id === assetId
+                    });
+
+                    asset.editing = !asset.editing;
+                },
+                updateAsset: (state, { assetId, coinCount, investment }) => {                    
+                    var asset = state.basicAssets.find(a => {
+                        return a.id === assetId
+                    });
+
+                    asset.coinCount = coinCount;
+                    asset.investment = investment;
+                }
             },
             actions: {
                 async loadDataAsync({ commit, rootState }) {
@@ -75,6 +95,15 @@ export default class AssetsModuleExtension {
                     commit("updateLastLoaded");
 
                     return assetsArray;
+                },
+                async saveAssetAsync({ commit, rootState }, { assetId, coinCount, investment }) {
+                    await self.firebaseRepository.updateCoinAsync(rootState.user, { assetId, coinCount, investment });
+                    commit("updateAsset", {
+                        assetId, 
+                        coinCount, 
+                        investment
+                    })
+                    commit("toggleEditedAsset", assetId)
                 }
             }
         }

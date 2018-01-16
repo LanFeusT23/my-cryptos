@@ -27,7 +27,7 @@ export default class ManageModuleExtension {
 
                     asset.editing = !asset.editing;
                 },
-                updateAsset: (state, { assetId, coinCount, investment }) => {
+                updateAsset: (state, { assetId, coinCount, investment }) => {                    
                     var asset = state.assets.find(a => {
                         return a.id === assetId
                     });
@@ -41,6 +41,14 @@ export default class ManageModuleExtension {
                     var assetsArray = JSON.parse(JSON.stringify(rootState.assets.basicAssets));
                     commit("setAssetsData", assetsArray);
                     return assetsArray;
+                },
+                async saveAssetAsync({ commit, rootState }, { assetId, coinCount, investment }) {
+                    await self.firebaseRepository.updateCoinAsync(rootState.user, { coinCount, investment });
+                    commit("updateAsset", {
+                        assetId, 
+                        coinCount, 
+                        investment
+                    })
                 }
             }
         }

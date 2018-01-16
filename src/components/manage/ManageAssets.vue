@@ -96,32 +96,25 @@
             }
         },
         computed: {
-            ...mapState("manage", ["assets"]),
+            ...mapState("assets", ["basicAssets"]),
             sortedAssets() {
-                return sortBy(this.assets, 'id');
+                return sortBy(this.basicAssets, 'id');
             }
         },
         methods: {
             editAsset(data) {
-                this.$store.commit("manage/toggleEditedAsset", {
-                    assetId: data.id,
-                    editing: true
-                })
+                this.$store.commit("assets/toggleEditedAsset", data.id)
             },
             deleteAsset() {
                 
             },
             saveAsset(data) {
-                console.log(data)
-                this.$store.commit("manage/updateAsset", {
+                this.$store.dispatch("assets/saveAssetAsync", {
                     assetId: data.id,
-                    coinCount: data.coinCount,
-                    investment: data.investment
+                    coinCount: 12,
+                    investment: 13
                 })
             }
-        },
-        created () {
-            this.$store.dispatch("manage/setDataAsync")
         }
     }
 </script>
