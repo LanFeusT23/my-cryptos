@@ -210,6 +210,7 @@
 
                 &.asset-name {
                     width: 50px;
+                    text-transform: uppercase;
                 }
 
                 &.asset-investment {

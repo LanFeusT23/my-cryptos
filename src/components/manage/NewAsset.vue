@@ -16,7 +16,7 @@
             <v-card-title class="headline">New Coin!</v-card-title>
             <v-card-text>
                 <v-text-field
-                    label="Name"
+                       label="Name"
                     v-model="name"
                     :rules="[rules.required, rules.stringNoSpaces]"
                     required
@@ -50,8 +50,8 @@
             return {
                 dialog: null,
                 name: null,
-                coinCount: null,
-                investment: null,
+                coinCount: 0,
+                investment: 0,
                 rules: {
                     required: (value) => !!value || 'Required.',
                     stringNoSpaces: (value) => {
@@ -67,6 +67,15 @@
         },
         methods: {
             async addNewCoin() {
+                if (this.coinCount < 0 || 
+                    this.investment < 0 || 
+                    this.name === undefined || 
+                    this.name === null ||
+                    this.name.trim() === ""
+                    ) {
+                    return;
+                }
+                
                 await this.$store.dispatch("assets/addAssetAsync", {
                     assetId: this.name,
                     coinCount: this.coinCount,
