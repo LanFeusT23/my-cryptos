@@ -23,7 +23,7 @@ export default class AssetsModuleExtension {
                     }
 
                     return state.basicAssets.map(asset => {
-                        var assetPrice = prices[asset.id];
+                        var assetPrice = prices[asset.id.toUpperCase()];
                         var totalValue = assetPrice * asset.coinCount;
                         var profit = totalValue - asset.investment;
 

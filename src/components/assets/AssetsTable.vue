@@ -99,6 +99,7 @@
                 }
 
                 .coin-name {
+                    text-transform: uppercase;
                     font-size: $size40px;
                 }
 

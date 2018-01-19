@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="dialog" persistent>
+    <v-dialog v-model="dialog" persistent content-class="new-asset-dialog">
         <v-btn
             color="pink"
             slot="activator"
@@ -16,10 +16,11 @@
             <v-card-title class="headline">New Coin!</v-card-title>
             <v-card-text>
                 <v-text-field
-                       label="Name"
+                    label="Name"
                     v-model="name"
                     :rules="[rules.required, rules.stringNoSpaces]"
                     required
+                    autofocus
                 ></v-text-field>
                 <v-text-field
                     label="Coin count"
@@ -90,5 +91,10 @@
 <style lang="scss">
     input {
         width: 100%;
+        text-transform: uppercase;
+    }
+
+    .new-asset-dialog {
+        max-width: $maxWidth;
     }
 </style>

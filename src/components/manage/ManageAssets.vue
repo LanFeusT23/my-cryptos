@@ -78,12 +78,12 @@
                         </template>
 
                         <template v-else>
-                            <button @click='editAsset(asset)'>
+                            <button class="edit-asset" @click='editAsset(asset)'>
                                 <i class="fa fa-pencil"></i>
                             </button>
 
                             <v-dialog v-model="editedCoins[asset.id].dialog" persistent>
-                                <button slot="activator">
+                                <button class="delete-asset" slot="activator">
                                     <i class="fa fa-trash"></i>
                                 </button>
                                 <v-card>
@@ -189,8 +189,21 @@
         width: 100%;
         padding: $size14px;
 
+        button {
+            &.delete-asset {
+                margin-bottom: 3px;
+            }
+        }
+
         table {
+            border-collapse: collapse;
             width: 100%;
+
+            tbody {
+                tr:hover {
+                    background-color: rgba(36, 36, 38, 0.34);
+                }
+            }
 
             th, td {
                 text-align: left;
@@ -209,12 +222,12 @@
                 }
 
                 &.asset-name {
-                    width: 50px;
+                    min-width: 50px;
                     text-transform: uppercase;
                 }
 
                 &.asset-investment {
-                    width: 110px;
+                    min-width: 110px;
                 } 
 
                 &.actions {
