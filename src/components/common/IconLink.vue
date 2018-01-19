@@ -16,7 +16,11 @@
         },
         computed: {
             cssClass() {
-                return `icon-asset-${this.assetName.toLowerCase()}`;
+                var assetName = this.assetName.toLowerCase()
+                if (assetName === 'iota') {
+                    assetName = 'miota'
+                }
+                return `icon-asset-${assetName}`
             },
             chartsUrl() {
                 return format(CHARTS_URL, this.assetName.toLowerCase(), 'usd')
