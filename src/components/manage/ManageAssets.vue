@@ -231,8 +231,9 @@
                 } 
 
                 &.actions {
-                    width: 40px;
-
+                    width: 50px;
+                    text-align: center;
+                    
                     * {
                         outline: none;
                     }
