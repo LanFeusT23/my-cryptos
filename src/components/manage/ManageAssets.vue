@@ -50,6 +50,8 @@
                             label="Investment"
                         ></AssetInput> -->
 
+                        //https://vuejs.org/v2/guide/components.html#sync-Modifier
+
                         <template v-if="editedCoins[asset.id].editing">
                             <v-text-field
                                 name="input-coin-investment"
