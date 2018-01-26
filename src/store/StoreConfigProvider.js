@@ -40,17 +40,18 @@ export default class StoreConfigProvider {
                 clearUser({ commit }) {
                     commit('clearUser')
                 },
-                loadAllData({ commit, dispatch }) {
+                async loadAllData({ commit, dispatch }) {
                     commit("setLoading", true)
-                    return dispatch("assets/loadDataAsync").then(assets => {
-                        return dispatch("prices/loadPricesAsync", assets)                            
-                            .catch(() => {
-                                commit("setError", false)
-                            })
-                            .then(() => {
-                                commit("setLoading", false)
-                            })
-                    })
+
+                    try {
+                        let assets = await dispatch("assets/loadDataAsync")
+                        dispatch("prices/loadPricesAsync", assets)
+                    } catch (error) {
+                        commit("setError", true)
+                    }
+                    finally {
+                        commit("setLoading", false)
+                    }
                 }
             },
             modules: {

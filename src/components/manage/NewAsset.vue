@@ -47,6 +47,8 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex'
+
     export default {
         name: 'NewAsset',
         data () {
@@ -68,6 +70,9 @@
                 }
             }
         },
+        computed: {
+            ...mapState("assets", ["basicAssets"])
+        },
         methods: {
             async addNewCoin() {
                 if (+this.coinCount < 0 || 
@@ -76,15 +81,16 @@
                     this.name === null ||
                     this.name.trim() === ""
                     ) {
-                    return;
+                    return
                 }
                 
                 await this.$store.dispatch("assets/addAssetAsync", {
                     assetId: this.name,
                     coinCount: +this.coinCount,
                     investment: +this.investment
-                });
-                this.dialog = !this.dialog;
+                })
+                await this.$store.dispatch("prices/loadPricesAsync", this.basicAssets)
+                this.dialog = !this.dialog
             }
         }
     }
