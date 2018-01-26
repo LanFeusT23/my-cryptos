@@ -23,10 +23,10 @@
                     <td class="asset-count">
                         <!-- <AssetInput
                             :editing="editedCoins[asset.id].editing"
-                            :valueBound="editedCoins[asset.id].coinCount"
+                            :valueBound.sync="+editedCoins[asset.id].coinCount"
                             :assetId="asset.id"
-                            label="Amount"
-                        ></AssetInput> -->
+                            label="Amount">
+                        </AssetInput> -->
 
                         <template v-if="editedCoins[asset.id].editing">
                             <v-text-field
@@ -45,12 +45,10 @@
                     <td class="asset-investment">
                         <!-- <AssetInput
                             :editing="editedCoins[asset.id].editing"
-                            :valueBound="editedCoins[asset.id].investment"
+                            :valueBound.sync="+editedCoins[asset.id].investment"
                             :assetId="asset.id"
-                            label="Investment"
-                        ></AssetInput> -->
-
-                        //https://vuejs.org/v2/guide/components.html#sync-Modifier
+                            label="Investment">
+                        </AssetInput> -->
 
                         <template v-if="editedCoins[asset.id].editing">
                             <v-text-field
@@ -171,8 +169,8 @@
                 data.map(a => {
                     this.$set(this.editedCoins, a.id, {
                         editing: false,
-                        coinCount: a.coinCount,
-                        investment: a.investment,
+                        coinCount: +a.coinCount,
+                        investment: +a.investment,
                         dialog: false
                     })
                 })

@@ -3,9 +3,10 @@
         v-if="editing"
         :name="'input-coin-' + label"
         :label="label"
-        v-model="valueBound"
+        v-model="localValue"
         :rules="[rules.required, rules.number]"
-        single-line>
+        single-line
+        type="number">
     </v-text-field>
     <span v-else>
         {{ valueBound }}
@@ -33,7 +34,7 @@
                 required: true
             }
         },
-        data () {
+        data() {
             return {
                 rules: {
                     required: (value) => !!value || 'Required.',
@@ -44,6 +45,21 @@
                         return true;
                     }
                 }
+            }
+        },
+        computed: {
+            localValue: {
+                get() {
+                    return this.valueBound
+                },
+                set(value) {
+                    this.$emit('update:valueBound', +value)
+                }
+            }
+        },
+        methods: {
+            updateValue(value) {
+                this.$emit('update:valueBound', +value)
             }
         }
     }

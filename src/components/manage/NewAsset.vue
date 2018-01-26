@@ -20,20 +20,22 @@
                     v-model="name"
                     :rules="[rules.required, rules.stringNoSpaces]"
                     required
-                    autofocus
-                ></v-text-field>
+                    autofocus>
+                </v-text-field>
                 <v-text-field
                     label="Coin count"
                     v-model="coinCount"
                     :rules="[rules.required, rules.number]"
                     required
-                ></v-text-field>
+                    type="number">
+                </v-text-field>
                 <v-text-field
                     label="Invested amount in US dollars"
                     v-model="investment"
                     :rules="[rules.required, rules.number]"
                     required
-                ></v-text-field>
+                    type="number">
+                </v-text-field>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -68,8 +70,8 @@
         },
         methods: {
             async addNewCoin() {
-                if (this.coinCount < 0 || 
-                    this.investment < 0 || 
+                if (+this.coinCount < 0 || 
+                    +this.investment < 0 || 
                     this.name === undefined || 
                     this.name === null ||
                     this.name.trim() === ""
@@ -79,8 +81,8 @@
                 
                 await this.$store.dispatch("assets/addAssetAsync", {
                     assetId: this.name,
-                    coinCount: this.coinCount,
-                    investment: this.investment
+                    coinCount: +this.coinCount,
+                    investment: +this.investment
                 });
                 this.dialog = !this.dialog;
             }
