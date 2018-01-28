@@ -45,7 +45,7 @@ export default class StoreConfigProvider {
 
                     try {
                         let assets = await dispatch("assets/loadDataAsync")
-                        dispatch("prices/loadPricesAsync", assets)
+                        await dispatch("prices/loadPricesAsync", assets)
                     } catch (error) {
                         commit("setError", true)
                     }
